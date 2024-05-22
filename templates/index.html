@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TxGraffiti Web Interface</title>
+    <style>
+        body {
+            background-image: url('/static/brick-wall.jpg'); /* Reference to your background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.5em;
+            text-align: center;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-size: 1.1em;
+        }
+        select, input {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .shutdown-btn {
+            background: #f44336;
+        }
+        .shutdown-btn:hover {
+            background: #e53935;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to TxGraffiti</h1>
+        <p>TxGraffiti is a program designed for mathematicians to explore and generate new mathematical conjectures from data. Choose a dataset, select your parameters, and let TxGraffiti assist you in discovering new insights.</p>
+        <form action="{{ url_for('index') }}" method="get">
+            <label for="dataset">Choose a dataset:</label>
+            <select name="dataset" id="dataset" onchange="this.form.submit()">
+                <option value="graphs" selected>Graphs</option>
+            </select>
+        </form>
+        <form action="{{ url_for('conjecture') }}" method="post">
+            <input type="hidden" name="dataset" value="graphs">
+
+            <label for="invariant_column">Select the invariant to conjecture on:</label>
+            <select name="invariant_column" id="invariant_column">
+                {% for column in numerical_columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="single_property">Would you like to only consider a single property?</label>
+            <select name="single_property" id="single_property">
+                <option value="none">None</option>
+                {% for column in boolean_columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="dalmatian_answer">Apply Dalmatian to the data - this is a filtering of the conjectures based off of the priniple of strongest conjecture? (y/n):</label>
+            <input type="text" name="dalmatian_answer" id="dalmatian_answer" value="y">
+
+            <button type="submit">Generate Conjectures</button>
+        </form>
+
+        <form action="{{ url_for('shutdown') }}" method="post" style="margin-top: 20px;">
+            <button type="submit" class="shutdown-btn">Shutdown Server</button>
+        </form>
+    </div>
+</body>
+</html>

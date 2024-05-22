@@ -70,7 +70,7 @@ if single_property_answer == "y":
     # print the conjectures.
     print("The conjectures are:")
     for i, conjecture in enumerate(conjectures):
-        print(f"Conjecture {i}: {conjecture} (touch = {conjecture.touch}) \n")
+        print(f"Conjecture: {conjecture} (touch = {conjecture.touch}) \n")
 else:
     # Ask if the user wants to apply Dalmatian to the data.
     dalmatian_answer = input("Apply Dalmatian to the data? (y/n): ")
@@ -85,7 +85,7 @@ else:
     # print the conjectures.
     print("The conjectures are:")
     for i, conjecture in enumerate(conjectures):
-        print(f"Conjecture {i}: {conjecture} (touch = {conjecture.touch}) \n")
+        print(f"Conjecture: {conjecture} (touch = {conjecture.touch}) \n")
 
 
 
